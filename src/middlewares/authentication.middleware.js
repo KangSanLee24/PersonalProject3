@@ -1,8 +1,9 @@
+//인증 미들웨어
 import jwt from "jsonwebtoken";
 import { prisma } from "../utils/prisma/index.js";
 import { SECRET_KEY } from "../constants/auth.constant.js";
 
-export const authMiddleware = async function (req, res, next) {
+export const authenticationMiddleware = async function (req, res, next) {
   try {
     const authorization = req.headers["authorization"];
 
@@ -16,7 +17,7 @@ export const authMiddleware = async function (req, res, next) {
     const decodedToken = jwt.verify(token, SECRET_KEY);
     const userId = decodedToken.userId;
 
-    const user = await prisma.Users.findFirst({
+    const user = await prisma.users.findFirst({
       where: { userId: +userId },
       select: { userId: true, role: true }, //엑세스토큰에 역할넣기
     });
