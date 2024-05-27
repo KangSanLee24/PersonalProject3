@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { prisma } from "../utils/prisma/index.js";
 import { signupValidator } from "../middlewares/validators/signup.validator.js";
 import { signinValidator } from "../middlewares/validators/singin.validator.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { authenticationMiddleware } from "../middlewares/authentication.middleware.js";
 import { SECRET_KEY } from "../constants/auth.constant.js";
 
 const router = express.Router();
@@ -23,7 +23,7 @@ router.post("/sign-up", signupValidator, async (req, res, next) => {
     }
 
     // 이미 가입된 사용자 확인
-    const isExistUser = await prisma.Users.findFirst({
+    const isExistUser = await prisma.users.findFirst({
       where: { email },
     });
     if (isExistUser) {
@@ -34,7 +34,7 @@ router.post("/sign-up", signupValidator, async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prisma.Users.create({
+    const user = await prisma.users.create({
       data: {
         email,
         password: hashedPassword,
@@ -58,7 +58,7 @@ router.post("/sign-up", signupValidator, async (req, res, next) => {
 router.post("/sign-in", signinValidator, async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await prisma.Users.findFirst({ where: { email } });
+    const user = await prisma.users.findFirst({ where: { email } });
     if (!user)
       return res
         .status(400)
@@ -88,13 +88,13 @@ router.post("/sign-in", signinValidator, async (req, res, next) => {
 });
 
 /** 사용자 조회 API **/
-router.get("/users", authMiddleware, async (req, res, next) => {
+router.get("/users", authenticationMiddleware, async (req, res, next) => {
   try {
     // 사용자 인증하고 req.user에 담긴 정보 중 userId만 가져옴.
     const { userId } = req.user;
 
     //
-    const user = await prisma.Users.findFirst({
+    const user = await prisma.users.findFirst({
       where: { userId: +userId },
       select: {
         userId: true,
@@ -103,7 +103,7 @@ router.get("/users", authMiddleware, async (req, res, next) => {
         role: true,
         createdAt: true,
         updatedAt: true,
-        Resumes: {
+        resumes: {
           // 1:N 테이블인데 어케하지 일단 생각중
           where: { UserId: +userId },
           select: {
