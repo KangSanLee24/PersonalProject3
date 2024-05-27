@@ -22,8 +22,8 @@ model Users {
   createdAt  DateTime @default(now()) @map("createdAt")
   updatedAt  DateTime @updatedAt @map("updatedAt")
 
-  Resumes    Resumes[]
-  ResumeLogs ResumeLogs[]
+  resumes    Resumes[]
+  resumeLogs ResumeLogs[]
 }
 
 model Resumes {
@@ -35,21 +35,21 @@ model Resumes {
   createdAt     DateTime   @default(now()) @map("createdAt")
   updatedAt     DateTime   @updatedAt @map("updatedAt")
 
-  Users         Users      @relation(fields: [UserId], references: [userId])
-  ResumeLogs    ResumeLogs[]
+  users         Users      @relation(fields: [UserId], references: [userId])
+  resumeLogs    ResumeLogs[]
 }
 
 model ResumeLogs {
-  logId         Int       @id @default(autoincrement()) @map("log_id")
+  logId         String    @id @default(uuid()) @map("log_id")
   ResumeId      Int       @map("Resume_Id") // 외래 키, Resumes 테이블 참조
-  UserId        Int       @map("User_Id")   // 외래 키, Users 테이블 참조
+  RecruiterId   Int       @map("Recruiter_Id") // 외래 키, Users 테이블 참조. 이력서 제출자 말고 수정한 RECRUITER의 UserId
   oldStatus     Status    @map("old_status")
   newStatus     Status    @map("new_status")
   reason        String    @map("reason")
   createdAt     DateTime  @default(now()) @map("createdAt")
 
-  Resumes       Resumes   @relation(fields: [ResumeId], references: [resumeId])
-  Users         Users     @relation(fields: [UserId], references: [userId])
+  resumes       Resumes   @relation(fields: [ResumeId], references: [resumeId])
+  users         Users     @relation(fields: [RecruiterId], references: [userId])
 }
 
 enum Role {
