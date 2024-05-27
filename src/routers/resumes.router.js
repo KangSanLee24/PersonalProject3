@@ -130,7 +130,7 @@ router.get("/resumes/:resumeId", authMiddleware, async (req, res, next) => {
   }
 });
 
-/** 이력서 수정 API**/
+/** 이력서 수정 API 아직 APPLICANT버전 밖에 없다.**/
 router.patch(
   "/resumes/:resumeId",
   authMiddleware,
@@ -140,6 +140,14 @@ router.patch(
       const { userId } = req.user;
       const { resumeId } = req.params;
       const { title, introduction } = req.body;
+
+      let isExistResume = await prisma.Resumes.findFirst({
+        where: { UserId: +userId, resumeId: +resumeId },
+      });
+      if (!isExistResume)
+        return res
+          .status(400)
+          .json({ status: 400, message: "이력서가 존재하지 않습니다." });
 
       let resume = await prisma.Resumes.update({
         where: { UserId: +userId, resumeId: +resumeId },

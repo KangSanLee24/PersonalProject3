@@ -72,11 +72,13 @@ router.post("/sign-in", signinValidator, async (req, res, next) => {
       {
         userId: user.userId,
       },
-      SECRET_KEY
+      SECRET_KEY,
+      { expiresIn: "12h" } // 토큰 유효기간 12시간
     );
 
-    // authotization 쿠키에 Bearer 토큰 형식으로 JWT를 저장합니다.
-    res.cookie("authorization", `Bearer ${token}`);
+    // authorization 헤더에 Bearer 토큰 형식으로 JWT를 저장합니다.
+    res.setHeader("authorization", `Bearer ${token}`);
+
     return res
       .status(200)
       .json({ status: 200, message: "로그인에 성공하였습니다." });
