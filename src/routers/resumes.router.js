@@ -161,7 +161,7 @@ router.patch(
       });
 
       return res.status(200).json({
-        status: 200,
+        status: 201,
         message: "이력서 수정에 성공했습니다.",
         data: resume,
       });
@@ -193,7 +193,7 @@ router.delete(
         where: { UserId: +userId, resumeId: +resumeId },
       });
       return res.status(200).json({
-        status: 200,
+        status: 201,
         message: "이력서 삭제에 성공했습니다.",
         data: resumeId,
       });
@@ -257,7 +257,7 @@ router.patch(
 
       // 응답 반환
       return res.status(200).json({
-        status: 200,
+        status: 201,
         message: "이력서 상태 변경에 성공하였습니다.",
         logId: resumeLog.logId,
         recruiterId: +userId,

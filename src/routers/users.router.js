@@ -61,12 +61,12 @@ router.post("/sign-in", signinValidator, async (req, res, next) => {
     const user = await prisma.users.findFirst({ where: { email } });
     if (!user)
       return res
-        .status(400)
-        .json({ status: 400, message: "인증 정보가 유효하지 않습니다." });
+        .status(401)
+        .json({ status: 401, message: "인증 정보가 유효하지 않습니다." });
     else if (!(await bcrypt.compare(password, user.password)))
       return res
-        .status(400)
-        .json({ status: 400, message: "인증 정보가 유효하지 않습니다." });
+        .status(401)
+        .json({ status: 401, message: "인증 정보가 유효하지 않습니다." });
 
     const token = jwt.sign(
       {
