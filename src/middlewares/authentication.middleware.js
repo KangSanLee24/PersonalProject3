@@ -1,10 +1,12 @@
+//인증 미들웨어
 import jwt from "jsonwebtoken";
 import { prisma } from "../utils/prisma/index.js";
 import { SECRET_KEY } from "../constants/auth.constant.js";
 
-export const authMiddleware = async function (req, res, next) {
+export const authenticationMiddleware = async function (req, res, next) {
   try {
-    const { authorization } = req.cookies;
+    const authorization = req.headers["authorization"];
+
     if (!authorization) throw new Error("인증 정보가 없습니다.");
 
     const [tokenType, token] = authorization.split(" ");
@@ -15,11 +17,13 @@ export const authMiddleware = async function (req, res, next) {
     const decodedToken = jwt.verify(token, SECRET_KEY);
     const userId = decodedToken.userId;
 
-    const user = await prisma.Users.findFirst({
+    const user = await prisma.users.findFirst({
       where: { userId: +userId },
+      select: { userId: true, role: true }, //엑세스토큰에 역할넣기
     });
+
     if (!user) {
-      res.clearCookie("authorization");
+      res.setHeader("Authorization", ""); // Authorization 비우기
       throw new Error("인증 정보와 일치하는 사용자가 없습니다.");
     }
 
@@ -28,7 +32,7 @@ export const authMiddleware = async function (req, res, next) {
 
     next();
   } catch (error) {
-    res.clearCookie("authorization");
+    res.setHeader("Authorization", ""); // Authorization 비우기
 
     // 토큰이 만료되었거나, 조작되었을 때, 에러 메시지를 다르게 출력합니다.
     switch (error.name) {
