@@ -93,16 +93,16 @@ npx prisma migrate dev --name init
 ### 5. 서버 실행
 
 ```
-yarn start 
+yarn run start 
 ```
 
 ## 📋 API 명세서
 
-링크추가
+[Node.js 숙련주차 API 명세서](https://torch-consonant-c1e.notion.site/Node-js-API-cbc293b58e844844a9e36d1c6ef7a3ee?pvs=4)
 
 ## 📑 ERD (Entity Relationship Diagram)
 
-사진추가
+![ERD](./assets/pp3.ERD.JPG)
 
 ## 🔒 인증 및 인가
 
