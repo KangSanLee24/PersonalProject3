@@ -16,7 +16,7 @@
 ## 🛠 기술 스택
 
 - **웹 프레임워크**: Express.js
-- **패키지 매니저**: Yarn (또는 NPM)
+- **패키지 매니저**: Yarn
 - **모듈 시스템**: ESM (ES6 모듈 시스템)
 - **데이터베이스**: MySQL (AWS RDS)
 - **ORM**: Prisma
@@ -106,24 +106,25 @@ yarn run start
 
 ## 🔒 인증 및 인가
 
-- **JWT**를 사용하여 인증 및 인가를 처리합니다.
-- **Middleware**를 활용하여 인증 및 역할 기반 인가를 구현합니다.
+- **JWT**를 사용하여 인증 및 인가를 처리
+- **Middleware**를 활용하여 인증 및 역할 기반 인가를 구현
 
 ## 🧩 트랜잭션
 
-- 데이터베이스 트랜잭션을 활용하여 데이터 일관성을 보장합니다.
-- Prisma의 트랜잭션 API를 사용하여 구현합니다.
+- Prisma의 트랜잭션 API를 사용하여 구현할 예정
 
 ## 🌐 배포
 
-- **AWS EC2**에 Express.js 웹 서비스를 배포합니다.
+- **AWS EC2**를 통해 베포
 
 ## 🛠 개발 환경
 
-- Node.js v14 이상
-- Yarn 1.x 이상
-- MySQL 8.x 이상
-- Prisma 2.x 이상
+- Node.js v20.12.1
+- Yarn 1.0.0
+- Express 4.19.2
+- MySQL TLSv1.2,TLSv1.3
+- Prisma 5.14.0
+- Joi 17.13.1
 
 ## 📬 문의
 
