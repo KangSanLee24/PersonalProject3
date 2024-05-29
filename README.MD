@@ -72,7 +72,7 @@ cd PersonalProject3
 ### 2. 의존성 설치
 
 ```
-yarn init -y
+yarn
 ```
 
 ### 3. 환경 변수 설정
@@ -102,7 +102,7 @@ yarn run start
 
 ## 📑 ERD (Entity Relationship Diagram)
 
-![ERD](./assets/pp3.ERD.JPG)
+![ERD](./assets/pp3.ERD2.JPG)
 
 ## 🔒 인증 및 인가
 
