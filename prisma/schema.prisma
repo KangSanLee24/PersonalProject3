@@ -24,6 +24,8 @@ model Users {
 
   resumes    Resumes[]
   resumeLogs ResumeLogs[]
+
+  @@map("users")
 }
 
 model Resumes {
@@ -37,6 +39,8 @@ model Resumes {
 
   users         Users      @relation(fields: [UserId], references: [userId])
   resumeLogs    ResumeLogs[]
+
+  @@map("resumes")
 }
 
 model ResumeLogs {
@@ -49,7 +53,9 @@ model ResumeLogs {
   createdAt     DateTime  @default(now()) @map("createdAt")
 
   resumes       Resumes   @relation(fields: [ResumeId], references: [resumeId])
-  users         Users     @relation(fields: [RecruiterId], references: [userId])
+  user          Users     @relation(fields: [RecruiterId], references: [userId])
+
+   @@map("resume_logs") // 테이블 이름을 "resume_logs"로 변경
 }
 
 enum Role {
