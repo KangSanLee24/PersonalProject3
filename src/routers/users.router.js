@@ -103,16 +103,6 @@ router.get("/users", authenticationMiddleware, async (req, res, next) => {
         role: true,
         createdAt: true,
         updatedAt: true,
-        resumes: {
-          // 1:N 테이블인데 어케하지 일단 생각중
-          where: { UserId: +userId },
-          select: {
-            title: true,
-            status: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
       },
     });
 

@@ -136,7 +136,7 @@ router.get(
   }
 );
 
-/** 이력서 수정 API 아직 APPLICANT버전 밖에 없다.**/
+/** 이력서 수정 API **/
 router.patch(
   "/resumes/:resumeId",
   authenticationMiddleware,
